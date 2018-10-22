@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package example;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "github.com/galaxyobe/protoc-gen-gorm/proto/gorm.proto";
+
+
+message Base {
+    option (gorm.enabled) = true;
+    // uuid
+    uint64 uuid = 1 [(gogoproto.moretags) = 'gorm:"primary_key"', (gorm.primary_key) = true];
+    // name
+    string name = 2 [(gogoproto.moretags) = 'gorm:"index:name"'];
+    // create at
+    int64 createAt = 3 [(gorm.create_at) = true];
+    // update at
+    int64 updateAt = 4 [(gorm.update_at) = true];
+    // delete at
+    int64 deleteAt = 5 [(gogoproto.moretags) = 'gorm:"index:date"', (gorm.delete_at) = true];
+}

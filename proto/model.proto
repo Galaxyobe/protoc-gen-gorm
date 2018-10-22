@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package gorm;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+message Model {
+    option (gogoproto.goproto_unrecognized) = false;
+    option (gogoproto.goproto_sizecache) = false;
+    option (gogoproto.goproto_unkeyed) = false;
+    option (gogoproto.compare) = true;
+    
+    uint64 id = 1 [(gogoproto.customname) = "ID", (gogoproto.moretags) = 'gorm:"primary_key"'];
+    int64 createdAt = 2;
+    int64 updatedAt = 3;
+    int64 deletedAt = 4 [(gogoproto.moretags) = 'sql:"index"'];
+}

@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package gorm;
+
+import "google/protobuf/descriptor.proto";
+
+option java_package = "com.google.protobuf";
+option java_outer_classname = "GORM";
+
+
+message protobuf {
+    int32 number = 1;
+    string name = 2;
+}
+
+extend google.protobuf.MessageOptions {
+    // enabled generate, default is false
+    bool enabled = 75000;
+    // generate primary key -- Not Implemented Now --
+    protobuf generate_primary_key = 75001;
+    // generate create at -- Not Implemented Now --
+    protobuf generate_create_at = 75002;
+    // generate update at -- Not Implemented Now --
+    protobuf generate_update_at = 75003;
+    // generate delete at -- Not Implemented Now --
+    protobuf generate_delete_at = 75004;
+}
+
+extend google.protobuf.FieldOptions {
+    // primary key field, default is false
+    bool primary_key = 76001;
+    // createAt field, default is false
+    bool create_at = 76002;
+    // updateAt field, default is false
+    bool update_at = 76003;
+    // deleteAt field, default is false
+    bool delete_at = 76004;
+}
