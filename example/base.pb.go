@@ -31,9 +31,9 @@ type Base struct {
 	UpdateAt int64 `protobuf:"varint,4,opt,name=updateAt,proto3" json:"updateAt,omitempty"`
 	// delete at
 	DeleteAt             int64    `protobuf:"varint,5,opt,name=deleteAt,proto3" json:"deleteAt,omitempty" gorm:"index:date"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-" gorm:"-"`
-	XXX_unrecognized     []byte   `json:"-" gorm:"-"`
-	XXX_sizecache        int32    `json:"-" gorm:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *Base) Reset()         { *m = Base{} }

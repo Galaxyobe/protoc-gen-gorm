@@ -3,12 +3,11 @@
 
 package example
 
-import context "context"
 import github_com_jinzhu_gorm "github.com/jinzhu/gorm"
-import time "time"
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import "time"
+import "github.com/golang/protobuf/proto"
+import "fmt"
+import "math"
 import _ "github.com/galaxyobe/protoc-gen-gorm/proto"
 import _ "github.com/gogo/protobuf/gogoproto"
 
@@ -35,11 +34,11 @@ type BaseGORMController struct {
 	m  *Base
 }
 
-func (g *BaseGORMController) M(m *Base) {
+func (g *BaseGORMController) SetBase(m *Base) {
 	g.m = m
 }
 
-func (g *BaseGORMController) M() *Base {
+func (g *BaseGORMController) Base() *Base {
 	return g.m
 }
 
