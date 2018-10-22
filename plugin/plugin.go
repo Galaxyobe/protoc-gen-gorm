@@ -182,11 +182,11 @@ type {{.MessageName}}GORMController struct {
 	m  *{{.MessageName}}
 }
 
-func (g *{{.MessageName}}GORMController) M(m *{{.MessageName}}) {
+func (g *{{.MessageName}}GORMController) Set{{.MessageName}}(m *{{.MessageName}}) {
 	g.m = m
 }
 
-func (g *{{.MessageName}}GORMController) M() *{{.MessageName}} {
+func (g *{{.MessageName}}GORMController) {{.MessageName}}() *{{.MessageName}} {
 	return g.m
 }
 
