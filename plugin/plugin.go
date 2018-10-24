@@ -330,7 +330,8 @@ func (p *Plugin) generateGORMFunc(file *generator.FileDescriptor, message *gener
 		// find gorm special field
 		if data.PrimaryKey == "" || data.CreateAt == "" || data.UpdateAt == "" || data.DeleteAt == "" {
 			for _, field := range message.Field {
-				if data.PrimaryKey == "" && strings.Contains(field.Options.String(), `gorm:"primary_key"`) {
+				primaryKey := []byte{34, 103, 111, 114, 109, 58, 92, 34, 112, 114, 105, 109, 97, 114, 121, 95, 107, 101, 121, 92, 34, 34, 32}
+				if data.PrimaryKey == "" && bytes.Contains([]byte(field.Options.String()), primaryKey) {
 					data.PrimaryKey = generator.CamelCase(*field.Name)
 				} else if data.CreateAt == "" && generator.CamelCase(*field.Name) == "CreateAt" {
 					data.CreateAt = generator.CamelCase(*field.Name)
