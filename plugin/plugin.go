@@ -18,6 +18,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/galaxyobe/protoc-gen-gorm/proto"
 	"errors"
+	"path/filepath"
 )
 
 const (
@@ -44,12 +45,14 @@ type Plugin struct {
 	generator.PluginImports
 	UseGogoImport bool
 	GeneratePath  string
+	GenerateMap   map[string]bool
 }
 
 func NewPlugin(useGogoImport bool, generatePath string) *Plugin {
 	return &Plugin{
 		UseGogoImport: useGogoImport,
 		GeneratePath:  generatePath,
+		GenerateMap:   make(map[string]bool),
 	}
 }
 
@@ -293,9 +296,11 @@ func (g *{{.MessageName}}GORMController) Count(where, limit, offset, order inter
 `
 
 func (p *Plugin) generateGORMFunc(file *generator.FileDescriptor, message *generator.Descriptor) error {
-
+	name := strings.Split(filepath.Base(*file.Name), ".")[0]
+	enable := proto.GetBoolExtension(message.Options, gorm.E_Enabled, false)
+	p.GenerateMap[name] = enable
 	// enable gorm
-	if proto.GetBoolExtension(message.Options, gorm.E_Enabled, false) {
+	if enable {
 		// generateData
 		data := &generateData{
 			ContextPkg:  p.NewImport(contextPkg).Use(),

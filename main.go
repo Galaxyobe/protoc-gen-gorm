@@ -10,9 +10,11 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
+	"github.com/gogo/protobuf/protoc-gen-gogo/plugin"
 	"github.com/galaxyobe/protoc-gen-gorm/plugin"
 	"strconv"
 	"flag"
+	"path/filepath"
 )
 
 func main() {
@@ -25,7 +27,7 @@ func main() {
 	inject := flag.Bool("inject", false, "inject *.pb.go for gorm")
 	flag.StringVar(&generatePath, "inject-path", ".", "inject path of *.pb.go")
 	flag.IntVar(&ppid, "ppid", -1, "inject parent pid")
-	
+
 	flag.Parse()
 
 	myPlugin := plugin.NewPlugin(useGogoImport, generatePath)
@@ -78,12 +80,20 @@ func main() {
 
 	gen.GeneratePlugin(myPlugin)
 
+	var Response = new(plugin_go.CodeGeneratorResponse)
+
 	for i := 0; i < len(gen.Response.File); i++ {
 		gen.Response.File[i].Name = proto.String(strings.Replace(*gen.Response.File[i].Name, ".pb.go", ".gorm.go", -1))
+		name := strings.Split(filepath.Base(*gen.Response.File[i].Name), ".")[0]
+		if g, ok := myPlugin.GenerateMap[name]; ok {
+			if g {
+				Response.File = append(Response.File, gen.Response.File[i])
+			}
+		}
 	}
 
 	// Send back the results.
-	data, err = proto.Marshal(gen.Response)
+	data, err = proto.Marshal(Response)
 	if err != nil {
 		gen.Error(err, "failed to marshal output proto")
 	}
