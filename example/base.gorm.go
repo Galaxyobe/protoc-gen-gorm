@@ -3,11 +3,12 @@
 
 package example
 
+import context "context"
 import github_com_jinzhu_gorm "github.com/jinzhu/gorm"
-import "time"
-import "github.com/golang/protobuf/proto"
-import "fmt"
-import "math"
+import time "time"
+import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
+import math "math"
 import _ "github.com/galaxyobe/protoc-gen-gorm/proto"
 import _ "github.com/gogo/protobuf/gogoproto"
 

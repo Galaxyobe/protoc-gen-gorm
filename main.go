@@ -64,7 +64,7 @@ func main() {
 				gen.Error(err, "parsing gogoimport option")
 			}
 			myPlugin.UseGogoImport = useGogoImport
-		case "generate_path":
+		case "inject-path":
 			myPlugin.GeneratePath = kvp[1]
 		}
 

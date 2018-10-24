@@ -99,35 +99,25 @@ func (p *Plugin) InjectIgnoreFork() error {
 	return nil
 }
 
-func (p *Plugin) InjectIgnore(ppid int) error {
-
-	for {
-		if process, err := os.FindProcess(ppid); err != nil {
-			break
-		} else {
-			if err = process.Signal(syscall.Signal(0)); err != nil {
-				break
-			}
-		}
-		time.Sleep(1 * time.Second)
-	}
-
-	files, err := ioutil.ReadDir(p.GeneratePath)
+func injectIgnore(path string) error {
+	infos, err := ioutil.ReadDir(path)
 	if err != nil {
 		return err
 	}
-
 	var nn []string
-	for _, file := range files {
-		if !strings.HasSuffix(file.Name(), ".pb.go") || file.IsDir() {
+	for _, info := range infos {
+		if info.IsDir() {
+			injectIgnore(path + "/" + info.Name())
+			continue
+		} else if !strings.HasSuffix(info.Name(), ".pb.go") {
 			continue
 		}
-		nn = append(nn, file.Name())
-		log.Println(file.Name())
-		filePath := p.GeneratePath + "/" + file.Name()
+		nn = append(nn, info.Name())
+
+		filePath := path + "/" + info.Name()
 		f, err := os.OpenFile(filePath, os.O_RDWR, 0660)
 		if err != nil {
-			log.Println("ReadFile", file, err)
+			log.Println("ReadFile", info, err)
 			continue
 		}
 
@@ -158,6 +148,27 @@ func (p *Plugin) InjectIgnore(ppid int) error {
 		}
 		f.WriteAt(buffer.Bytes(), 0)
 		f.Close()
+	}
+
+	return nil
+}
+
+func (p *Plugin) InjectIgnore(ppid int) error {
+
+	for {
+		if process, err := os.FindProcess(ppid); err != nil {
+			break
+		} else {
+			if err = process.Signal(syscall.Signal(0)); err != nil {
+				break
+			}
+		}
+		time.Sleep(1 * time.Second)
+	}
+
+	err := injectIgnore(p.GeneratePath)
+	if err != nil {
+		return err
 	}
 
 	return nil

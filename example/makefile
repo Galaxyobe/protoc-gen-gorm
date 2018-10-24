@@ -29,7 +29,7 @@
 Includes := $(subst :, ,$(GOPATH))
 
 regenerate:
-	protoc  $(Includes:%=-I%/src) -I .:../proto --gogo_out=. --gorm_out=. *.proto
+	protoc  $(Includes:%=-I%/src) -I .:../proto --gogo_out=. --gorm_out=inject-path=.:. *.proto
 
 clean:
 	rm -rf *.*.go
