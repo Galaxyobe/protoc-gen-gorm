@@ -23,6 +23,7 @@ import (
 
 const (
 	contextPkg = "context"
+	errorsPkg  = "errors"
 	GORMPkg    = "github.com/jinzhu/gorm"
 	TimePkg    = "time"
 )
@@ -31,6 +32,7 @@ type generateData struct {
 	Package     string
 	MessageName string
 	ContextPkg  string
+	ErrorsPkg   string
 	GORMPkg     string
 	TimePkg     string
 	// field
@@ -243,7 +245,7 @@ func (g *{{.MessageName}}GORMController) Create() *{{.GORMPkg}}.DB {
 {{ if .PrimaryKey }}
 func (g *{{.MessageName}}GORMController) Delete() *{{.GORMPkg}}.DB {
 	if g.m.{{.PrimaryKey}} == 0 {
-		g.DB.Error = errors.New("the value of {{.PrimaryKey}} is not expected to be 0")
+		g.DB.Error = {{.ErrorsPkg}}.New("the value of {{.PrimaryKey}} is not expected to be 0")
 		return g.DB
 	}
 
@@ -303,7 +305,8 @@ func (p *Plugin) generateGORMFunc(file *generator.FileDescriptor, message *gener
 	if enable {
 		// generateData
 		data := &generateData{
-			ContextPkg:  p.NewImport(contextPkg).Use(),
+			//ContextPkg:  p.NewImport(contextPkg).Use(),
+			ErrorsPkg:   p.NewImport(errorsPkg).Use(),
 			GORMPkg:     p.NewImport(GORMPkg).Use(),
 			MessageName: generator.CamelCaseSlice(message.TypeName()),
 		}
@@ -321,10 +324,10 @@ func (p *Plugin) generateGORMFunc(file *generator.FileDescriptor, message *gener
 				data.DeleteAt = generator.CamelCase(*field.Name)
 			}
 
-			if field.TypeName != nil {
-				// use external proto
-				p.Generator.RecordTypeUse(*field.TypeName)
-			}
+			//if field.TypeName != nil {
+			//	// use external proto
+			//	p.Generator.RecordTypeUse(*field.TypeName)
+			//}
 		}
 
 		// find gorm special field
