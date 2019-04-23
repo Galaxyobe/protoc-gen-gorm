@@ -8,13 +8,13 @@ import (
 	"os"
 	"strings"
 
+	"flag"
+	"github.com/galaxyobe/protoc-gen-gorm/plugin"
 	"github.com/gogo/protobuf/proto"
 	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
 	"github.com/gogo/protobuf/protoc-gen-gogo/plugin"
-	"github.com/galaxyobe/protoc-gen-gorm/plugin"
-	"strconv"
-	"flag"
 	"path/filepath"
+	"strconv"
 )
 
 func main() {

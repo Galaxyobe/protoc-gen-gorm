@@ -3,14 +3,16 @@
 
 package example
 
-import context "context"
-import github_com_jinzhu_gorm "github.com/jinzhu/gorm"
-import time "time"
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
-import _ "github.com/galaxyobe/protoc-gen-gorm/proto"
-import _ "github.com/gogo/protobuf/gogoproto"
+import (
+	fmt "fmt"
+	math "math"
+	proto "github.com/golang/protobuf/proto"
+	_ "github.com/gogo/protobuf/gogoproto"
+	_ "github.com/galaxyobe/protoc-gen-gorm/proto"
+	errors "errors"
+	github_com_jinzhu_gorm "github.com/jinzhu/gorm"
+	time "time"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal

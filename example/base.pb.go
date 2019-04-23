@@ -3,11 +3,13 @@
 
 package example
 
-import proto "github.com/gogo/protobuf/proto"
-import fmt "fmt"
-import math "math"
-import _ "github.com/galaxyobe/protoc-gen-gorm/proto"
-import _ "github.com/gogo/protobuf/gogoproto"
+import (
+	fmt "fmt"
+	_ "github.com/galaxyobe/protoc-gen-gorm/proto"
+	_ "github.com/gogo/protobuf/gogoproto"
+	proto "github.com/gogo/protobuf/proto"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -40,7 +42,7 @@ func (m *Base) Reset()         { *m = Base{} }
 func (m *Base) String() string { return proto.CompactTextString(m) }
 func (*Base) ProtoMessage()    {}
 func (*Base) Descriptor() ([]byte, []int) {
-	return fileDescriptor_base_1b93aee069833760, []int{0}
+	return fileDescriptor_db1b6b0986796150, []int{0}
 }
 func (m *Base) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Base.Unmarshal(m, b)
@@ -48,8 +50,8 @@ func (m *Base) XXX_Unmarshal(b []byte) error {
 func (m *Base) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Base.Marshal(b, m, deterministic)
 }
-func (dst *Base) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Base.Merge(dst, src)
+func (m *Base) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Base.Merge(m, src)
 }
 func (m *Base) XXX_Size() int {
 	return xxx_messageInfo_Base.Size(m)
@@ -99,9 +101,9 @@ func init() {
 	proto.RegisterType((*Base)(nil), "example.Base")
 }
 
-func init() { proto.RegisterFile("base.proto", fileDescriptor_base_1b93aee069833760) }
+func init() { proto.RegisterFile("base.proto", fileDescriptor_db1b6b0986796150) }
 
-var fileDescriptor_base_1b93aee069833760 = []byte{
+var fileDescriptor_db1b6b0986796150 = []byte{
 	// 268 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0xcf, 0x41, 0x4e, 0xb4, 0x30,
 	0x14, 0x07, 0xf0, 0xf4, 0x9b, 0x7e, 0x3a, 0x76, 0x67, 0x13, 0x13, 0x64, 0x33, 0x84, 0x68, 0x82,
